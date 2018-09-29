@@ -1,6 +1,6 @@
-# js-9-19
+# js
 学习js
-echo "# js-9-19" >> README.md
+echo "# js" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
