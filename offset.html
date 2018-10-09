@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>动画效果</title>
+</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		button{
+			width: 100px;
+			height: 100px;
+		}
+		.box1{
+			width: 100px;
+			height: 100px;
+			background: pink;
+			position: absolute;
+			left: 0;
+			top: 130px;
+		}
+		.box2{
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			left: 0;
+			top: 260px;
+
+		}
+	</style>
+<body>
+	<button>点击回到原点</button>
+	<button>点击运动到200</button>
+	<button>点击运动到400</button>
+	<div class="box1"></div>
+	<div class="box2"></div>
+	<script type="text/javascript">
+		var btn = document.getElementsByTagName('button');
+		var box1 = document.getElementsByClassName('box1')[0];
+		var box2 = document.getElementsByClassName('box2')[0];
+
+		btn[0].onclick = function(){
+			animate(box2,0);
+			animate(box1,0);
+		};
+		btn[1].onclick = function(){
+			animate(box2,200);
+			animate(box1,200);
+		};
+		btn[2].onclick = function(){
+			animate(box2,400);
+			animate(box1,400);
+		};
+
+
+		function animate(e,target){
+			clearInterval(e.timer);
+			var speed = target>e.offsetLeft?10:-10;
+			e.timer = setInterval(function(){
+				var val = target - e.offsetLeft;
+				// div.style.left = parseInt(div.style.left) + 10 + "px";
+				e.style.left = e.offsetLeft + speed + "px";
+				if (Math.abs(val)<10) {
+					e.style.left = target + "px";
+					clearInterval(e.timer);
+				}
+			},10);
+			
+		}	
+	</script>
+</body>
+</html>
