@@ -125,7 +125,7 @@
 		console.log(list.indexOf(3));
 		var aaa = list.remove(3);
 		console.log(aaa);
-		list.print( );
+		list.print();
 	</script>
 </body>
 </html>
