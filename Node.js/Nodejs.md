@@ -50,7 +50,22 @@
 ## hello world
 
 * 创建编写javascript
-* 打开终端
+* 打开终端,定位文件位置
 * 执行文件,在终端中输入 node helloworld.js
 
-## 
+## node中没有BOM和DOM
+
+* 解析执行 javascript
+* 读写文件（浏览器中的javascript是没有文件操作能力的）
+    + 详细内容在01_writeread.js中
+
+## http
+
+1. 通过 var http = require('http')来加载http核心模块
+2. 通过 var server = http.createServer() 方法来返回一个Server实例
+3. 通过 server.on('request', function(){
+            console.log('收到客户端的请求')
+        })
+    来处理来自客户端的请求
+4. 通过 server.listen(8081)来绑定端口号，并启动服务器
+ 
