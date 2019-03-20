@@ -99,3 +99,35 @@
 3. 通过 `server.on('request', function(){console.log('收到客户端的请求')})`
     来处理来自客户端的请求
 4. 通过 `server.listen(8081)`来绑定端口号，并启动服务器
+
+## 在node中使用模版引擎 `art-template`
+
+* 安装 `npm install art-template --save`
+* 在需要使用的文件模板中加载 art-template
+    + 只需要使用require方法加载就可以了：require('art-template')
+    + 参数中的 art-template 就是下载的包的名字 
+* 差文档，使用引擎的api
+
+## 服务端渲染和客户端渲染的区别
+
+* 客户端渲染不利于SEO搜索引擎优化
+* 服务端渲染是可以被爬虫抓取到的，客户端渲染是很难被爬虫抓取到的
+* 两者结合
+
+## node.js 实现留言板的功能
+
+* 在服务端中，文件中的路径不需要写相对路径
+* 服务器开放了/public/ 目录，请求路径可直接写为：/public/xxx
+* / 就是url根路径的意思
+* /pinglun?name=xxxx&msg=xxxx;
+    + 对于这种表单提交的请求路径，由于其中具有用户动态填写的数据，
+    + 因此不可能通过去判断完整的url路径来处理这个请求
+    + 需要引入url核心模块，其中的parse中的query方法可以找出其中的参数以及所对应的数据
+    url.parse('lianjie',true)
+    + 使用url.parse方法将路径解析为一个方便操作的对象，第二个参数为true时表示将查询字符串转为一个对象（通过query属性来访问）
+    + 通过parse方法中的pathname属性来获取字符串的路径部分
+    + 提交表单获取得到数据后应该做什么
+        1. 获取表单提交的数据 parseObj.query
+        2. 生成日期到数据对象中，然后存储到数组中
+        3. 让用户重定向跳转到首页
+            当用户重新请求 / 的时候，index数组中的数据发生变化
