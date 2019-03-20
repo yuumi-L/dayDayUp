@@ -69,7 +69,7 @@ http.
             // 如果客户端发现收到服务端的响应的状态是302就会自动去响应头中找location，然后对该地址发起新的请求
             res.statusCode = 302
             res.setHeader('Location', '/')
-            
+            res.end()
         }else if (pathname === '/post'){
             fs.readFile('./view/post.html', function(err, data){
                 if (err) {
