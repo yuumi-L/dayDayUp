@@ -169,6 +169,15 @@ var 自定义变量名称 = require('模块')
 * 两个作用 
     + 执行被加载模块中的代码
     + 得到被加载模块的中的 exports 导出的接口对象
+* require 会优先加载缓存中的资源
+* require 加载模块时候的步骤
+    1. 先找到当前文件所处目录中的node_moudles目录(如果没有会往上级查找一直找到根目录)
+    2. node_modules/art-template
+    3. node_modules/art-template/package.json
+    4. 找到node_modules/art-template/package.json 中的main属性
+    5. main 属性中就记录了art-template的入口模块
+    6. 然后加载使用这个第三方模块
+    如果第三方模块包里面没有package.json或者其中的main不存在，则加载模块包中的index.js
 
 ### 导出 exports
 
@@ -181,15 +190,111 @@ moudle.exports = 'hello'
 //后者会将前者替换
 moudle.exports = 'world'
 ```
+* `moudle.exports` 与 `exports` 的区别
+    + exports是moudle.exports的一个引用
+    + 以下两个等价
+        - `moudle.exports.hello = 'hello'`
+        - `exports.hello = 'hello'` 
+    + 当一个模块需要导出多个成员时两者都可以
+    + 当一个模块需要导出单个成员时只可以使用`module.exports`
+    + 在模块最后默认有一句 `return module.exports`
 
+## npm
 
-* npm
-* package.json
-* express
-    + 第三方 web 开发框架
-    + 高度封装了 http 模块
-    + 更加专注于业务，而非底层细节
-    + 知其所以然
+* npm中的常用命令
+    1. npm init 项目初始化
+        + npm init -y 可以跳过想向导，快速生成
+    2. npm install 
+        + 简写 npm i
+        + 一次性把package.json中的dependencies选项中的依赖全部安装
+    3. npm install 包名
+        + 只下载
+    4. npm install 包名 --save
+        + 下载并且保存依赖项（package.json文件中的dependencies选项）
+    5. npm unstall 包名
+        + 只删除，如果有依赖项也依然保存
+    6. npm unstall 包名 --save
+        + 删除的同时也会把依赖信息去除
+    7. npm help 查看帮助
+    8. 安装cnpm
+    ```shell
+    npm install --global cnpm
+    ``` 
+    9. 
+    ```shell
+    # 可以通过此设置来修改npm的下载源
+    npm config set registry https://registry.npm.taobao.com
+    # 通过以下的方法来查看是否设置成功
+    npm config list
+    ```
+
+## package.json
+
+## 修改代码后自动重启服务器
+
+* 安装nodemon
+* npm install --global nodemon
+
+* 配置文件
+## express
+* 第三方 web 开发框架
+* 高度封装了 http 模块
+* 更加专注于业务，而非底层细节
+* 知其所以然
+
+## 在express中使用art-template模板引擎
+
+* 安装
+```shell
+npm install --save art-template
+npm install --save express-art-template
+```
+* 配置
+```javascript
+// 其中第一个参数可以改为html 即改变模板引擎渲染的默认格式文件
+app.engine('art', require('express-art-template'))
+```
+* 使用
+```javascript
+app.get('/', function(req, res){
+    // express 默认会去项目中的views目录中找index.html
+    res.send('index.html')
+})
+```
+* 如果希望修改默认的views师徒渲染存储目录，可以：
+```javascript
+res.set('views','需要变更的路径名称')
+```
+
+## 在express中获取post请求的数据
+
+* 在express中没有内置获取变淡POST 请求的API 这里外卖需要使用一个第三方包body-parser
+    1. 安装
+    ```shell
+    npm install --save body-parser
+    ```
+    2. 配置
+    ```javascript
+    var express = require('express')
+    var bodyParser = require('body-parser')
+
+    var app = express()
+    // 配置body-parser
+    // 只要加入这个配置，则早req请求对象上会多出来一个属性：body
+    // 也就是说可以直接通过 req.body来获取表单POST请求体的数据
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+
+    // parse application/json
+    app.use(bodyParser.json())
+
+    app.use(function (req, res) {
+    res.setHeader('Content-Type', 'text/plain')
+    res.write('you posted:\n')
+    res.end(JSON.stringify(req.body, null, 2))
+    })
+    ```
+
 * 增删改查
     + 使用文件来保存数据（锻炼异步编码）
 * MongoDB（所有方法都封装好了，很简单，暂时不学）

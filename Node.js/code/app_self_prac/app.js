@@ -56,11 +56,6 @@ server.on('request', function(req, res){
         var month = date.getMonth() + 1
         var day = date.getDate()
         comment.time = year + '-' + month + '-' + day
-        fs.writeFile('./public/data.json', 12312321, {flag: 'a'}, function(err){
-            if(err){
-                console.log('X')
-            }
-        })
         comments.push(comment)
         res.statusCode = 302
         res.setHeader('Location','/')
