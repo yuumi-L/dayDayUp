@@ -228,9 +228,9 @@ moudle.exports = 'world'
     npm config list
     ```
 
-## package.json
+## package.json和package-lock.json的区别
 
-## 修改代码后自动重启服务器
+## 小插件--修改代码后自动重启服务器
 
 * 安装nodemon
 * npm install --global nodemon
@@ -295,6 +295,69 @@ res.set('views','需要变更的路径名称')
     })
     ```
 
-* 增删改查
+## 增删改查（学生管理系统）
     + 使用文件来保存数据（锻炼异步编码）
-* MongoDB（所有方法都封装好了，很简单，暂时不学）
+## MongoDB
+
+* 基本概念 
+    + 可以有多个数据库
+    + 一个数据库可以有多个集合（表）
+    + 一个集合可以有多个文档
+    + 文档结构很灵活，没有任何限制
+
+* 在官网进行下载并进行安装（注意：在4.0版本之后安装时在最后一个确定页面时需要将install MongoDB compass勾选去掉）
+* 安装完成后再命令行输入 mongod --version 查看版本验证是否完成安装（若显示mongod不是内部命令，需手动设置环境变量）
+* 命令行mongod即可打开数据库
+* 在另一个命令行中输入mongo即可连接至数据库
+
+* show dbs
+    + 查看显示所有数据库
+* db 
+    + 查看当前操作的数据库
+* use 数据库名字   
+    + 切换到指定的数据库（如果没有就自动创建）
+* show collections 
+* db.students.insertOne({插入的内容})
+* db.students.find()
+
+
+
+## 在node中如何操作MongoDB数据
+
+* mongoose 第三方包
+
+1. 连接数据库
+```javascript
+mongoose.connect('mongodb://localhost/cat')
+```
+2. 设计文档结构（表结构）
+    + 字段名称就是表结构中的属性名称
+    + 约束的目的是为了保证数据的完整性，不要有脏数据
+
+```javascript
+var userSchema = new Schema({
+    username:{
+        type: String,
+        required: true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String
+    }
+})
+```
+
+3. 将文档结构发布为模型
+    + mongoose.model 方法就是用来将一个架构发布为model
+    + 第一个参数：传入一个大写名词单数字符串用来百事你的数据库名称
+    + 第二个参数：结构Schema
+    + 返回值：模型构造函数
+
+```javascript
+var User = mongoose.model('User', userSchema)
+```
+
+4. 当我们有了模板构造函数之后，就可以使用这个构造函数对users进行数据处理
