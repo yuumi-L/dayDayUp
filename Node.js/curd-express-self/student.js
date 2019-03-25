@@ -28,8 +28,6 @@ exports.findById = function (id, callback) {
         var ret = students.find(function (item) {
             return item.id === parseInt(id)
           })
-        // console.log(ret)
-        console.log(students.filter(x=>x.id===parseInt(id))[0])
         callback(null, ret)
     })
 }

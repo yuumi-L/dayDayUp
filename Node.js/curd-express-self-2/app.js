@@ -1,13 +1,7 @@
-/**
- * app的入口文件
- * 这里主要是用来加载主要的相关组件
- */
-
 var express = require('express')
 var router = require('./router')
 var bodyParser = require('body-parser')
-
-var app = express()
+var app = express() 
 
 app.use('/public/', express.static('./public/'))
 app.use('/node_modules/', express.static('./node_modules/'))
@@ -23,5 +17,5 @@ app.use(bodyParser.json())
 app.use(router)
 
 app.listen(3000,function(){
-    console.log('3000端口已打开，请前往浏览器查看效果')
+    console.log('running...')
 })
