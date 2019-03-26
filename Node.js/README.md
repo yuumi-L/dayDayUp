@@ -312,9 +312,6 @@ sublime插件 html-css-js prettify(格式化工具)
 * 但是MongoDB 是长的最想关系型数据库的非关系型数据库
 * MongoDB不需要设计表结构
 * 也就是说你可以任意的往里面存储数据，没有结构的说法
-## 增删改查（学生管理系统）
-    + 使用文件来保存数据（锻炼异步编码）
-## MongoDB
 
 * 基本概念 
     + 可以有多个数据库
@@ -336,6 +333,9 @@ sublime插件 html-css-js prettify(格式化工具)
 * show collections 
 * db.students.insertOne({插入的内容})
 * db.students.find()
+
+## 增删改查（学生管理系统）
+    + 使用文件来保存数据（锻炼异步编码）
 
 
 
@@ -378,3 +378,15 @@ var User = mongoose.model('User', userSchema)
 ```
 
 4. 当我们有了模板构造函数之后，就可以使用这个构造函数对users进行数据处理
+
+## Promise
+
+```javascript
+// 在es6中新增了一个api Promise
+// Promise是一个构造函数
+
+// 创建Promise容器
+new Promise(function(){
+    fs.readFile('./')
+})
+```
