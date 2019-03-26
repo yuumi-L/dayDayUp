@@ -4,6 +4,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-art-template": "^1.0.1",
-    "mongoose": "^5.4.19"
+    "inherits": "^2.0.3",
+    "mongoose": "^5.4.20",
+    "raw-body": "^2.3.3"
   }
 }
