@@ -390,3 +390,9 @@ new Promise(function(){
     fs.readFile('./')
 })
 ```
+
+## Node 中的其他成员
+
+* 在每个模块中，除了require，exports等模块相关api之外，还有两个特殊的成员
+    1. __dirname 可以用来获取当前文件模块所属目录的绝对路径
+    2. __filename 可以用来获取当前文件的绝对路径
