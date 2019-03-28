@@ -335,7 +335,7 @@ sublime插件 html-css-js prettify(格式化工具)
 * db.students.find()
 
 ## 增删改查（学生管理系统）
-    + 使用文件来保存数据（锻炼异步编码）
+* 使用文件来保存数据（锻炼异步编码）
 
 
 
