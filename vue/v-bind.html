@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='https://vuejs.org/js/vue.js'></script>
+    <style>
+        .textColor{
+            color:red;
+        }
+        .textSize{
+            font-size: 52px
+        }
+    </style>
+</head>
+<body>
+    <!-- v-bind的使用 -->
+    <div id="app">
+        <div :class='{textColor:iscolor,textSize:issize}'>这是个盒子</div>
+        <button @click='btnClickChangeColor'>改变颜色</button>
+        <button @click='btnClickChangeSize'>改变大小</button>
+    </div>
+</body>
+</html>
+<script>
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            iscolor: false,
+            issize:true
+        },
+        methods: {
+            btnClickChangeColor(){
+                this.iscolor = !this.iscolor
+            },
+            btnClickChangeSize(){
+                this.issize = !this.issize
+            }
+        },
+    })
+</script>

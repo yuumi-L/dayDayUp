@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,26 @@
     <title>Document</title>
     <script src='https://vuejs.org/js/vue.js'></script>
 </head>
+
 <body>
     <div id="app">
         <input type="text" v-model='next'>
         <button @click='addlist'>确定</button>
         <div v-for='item of list' :key='item.id'>
             <ul>
-                <li @click="removelist" :id='item.id'>{{item.title}}</li>
+                <li @click="removelist(item.id)" :id='item.id'>{{item.title}}</li>
             </ul>
         </div>
     </div>
 </body>
+
 </html>
 <script>
     var vm = new Vue({
-        el:"#app",
-        data:{
-            next:'',
-            list:[
+        el: "#app",
+        data: {
+            next: '',
+            list: [
                 {
                     id: 1,
                     title: 'eat'
@@ -40,20 +43,29 @@
             ]
         },
         methods: {
-            addlist(){
-                if (this.next === ''){
+            addlist() {
+                if (this.next === '') {
                     alert('请输入内容')
-                }else{
-                    this.list.push({
-                        id: this.list.length + 1,
-                        title:this.next
-                    })
-                    this.next=''
+                } else {
+                    if (this.list.length <= 0) {
+                        this.list.push({
+                            id: 1,
+                            title: this.next
+                        })
+                    } else {
+                        this.list.push({
+                            id: this.list[this.list.length - 1].id + 1,
+                            title: this.next
+                        })
+                    }
+                    this.next = ''
                 }
             },
-            removelist(){
+            removelist(id) {
                 // this.list.splice()
                 console.log(id)
+                let rm = this.list.findIndex(item => item.id === id)
+                this.list.splice(rm, 1)
             }
         },
     })
