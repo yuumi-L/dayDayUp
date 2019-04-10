@@ -1,10 +1,10 @@
 <template>
-	<div>这是首页的header</div>
+	<div>这是首页的footer</div>
 </template>
 
 <script>
 	export default {
-		name:'sheader'
+		name:'homeFooter'
 	}
 </script>
 
