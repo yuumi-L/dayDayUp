@@ -15,8 +15,6 @@ const store = new Vuex.Store({
             state.count--
         }
     },
-    actions: {
-
-    }
+    actions: {}
 })
 export default store
