@@ -6,18 +6,18 @@
 </template>
 
 <script>
-
 	import axios from 'axios'
 
 	export default {
-		name: 'shouye',
-		components: {
-		},
-		created(){
+		name: 'about',
+		components: {},
+		created() {
 			axios({
-				method:'POST',
-				url:'/news/index'
-			}).then(res => {console.log(res)})
+				method: 'POST',
+				url: '/news/index'
+			}).then(res => {
+				console.log(res)
+			})
 		}
 	}
 </script>
