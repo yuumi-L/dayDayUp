@@ -8,7 +8,10 @@ import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 require('./mock.js')
 
-Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
+Vue.prototype.$ELEMENT = {
+	size: 'small',
+	zIndex: 3000
+};
 Vue.use(Element);
 
 Vue.prototype.$axios = axios
@@ -16,7 +19,7 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 new Vue({
-    router,
-    store,
-    render: h => h(App),
+	router,
+	store,
+	render: h => h(App),
 }).$mount('#app')

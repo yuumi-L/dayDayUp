@@ -15,8 +15,6 @@ export default {
   },
   methods: {
     shuchuid() {
-      console.log(this.id);
-      alert(this.id);
       this.$router.go(-1);
     }
   }

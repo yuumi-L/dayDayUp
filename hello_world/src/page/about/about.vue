@@ -23,7 +23,6 @@ export default {
       method: "POST",
       url: "/news/index"
     }).then(res => {
-      console.log(res);
     });
   }
 };
