@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+const aaa = require('../dist/main.js');
