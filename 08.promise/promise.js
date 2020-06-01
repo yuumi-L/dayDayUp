@@ -2,15 +2,23 @@ const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
-class Promise{
-  constructor(executor){
-    if(typeof executor !== 'function'){
+const resolvePromise = (promise2, x, resolve, reject) => {
+  if (x === promise2) {
+    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+  }
+  // TODO https://www.bilibili.com/video/BV1sZ4y1j71K?from=search&seid=12164927081543218022 42:25
+
+}
+
+class Promise {
+  constructor(executor) {
+    if (typeof executor !== 'function') {
       throw new TypeError(`Promise resolver ${executor} is not a function`)
     }
-    
+
     this.initValue()
     this.initBind()
-    
+
     try {
       executor(this.resolve, this.reject)
     } catch (e) {
@@ -23,7 +31,7 @@ class Promise{
     this.reject = this.reject.bind(this)
   }
 
-  initValue(){
+  initValue() {
     // 初始化状态
     this.value = null // 终值
     this.reason = null // 拒因
@@ -32,22 +40,22 @@ class Promise{
     this.onRejectedCallbacks = [] // 失败回调
   }
 
-  resolve(value){
+  resolve(value) {
     // 成功后的一系列操作(状态的改变，成功回调的执行)
-    if(this.state === PENDING){
+    if (this.state === PENDING) {
       this.state = FULFILLED
       this.value = value
       this.onFulfilledCallbacks.forEach(fn => fn(this.value))
     }
   }
 
-  reject(reason){
+  reject(reason) {
     // 失败后的一系列操作（状态的改变， 失败回调的执行）
-    if(this.state === PENDING){
+    if (this.state === PENDING) {
       this.state = REJECTED
       this.reason = reason
       this.onRejectedCallbacks.forEach(fn => fn(this.reason))
-    } 
+    }
   }
 
   then(onFulfilled, onRejected) {
@@ -61,29 +69,56 @@ class Promise{
         return reason
       }
     }
-     
+
     // 实现链式调用，必须返回一个新的promise实例
-    let promise2 = new Promise((resolve, reject) => {
-      if (this.state === FULFILLED) { 
-        // console.log(onFulfilled.toString())
-        setTimeout(() => {
-          onFulfilled(this.value)
-        })
+    let promise2 = Promise((resolve, reject) => {
+      console.log(resolve.toString())
+      if (this.state === FULFILLED) {
+        setTimeout(() => {  // 宏任务 为了保证promise2 能成功执行完成
+          try {
+            let x = onFulfilled(this.value)
+            // x可能是普通值 也可能是promise
+            // 判断x的值 推导 promise2 的状态
+            resolvePromise(promise2, x, resolve, reject)
+          } catch (e) {
+            reject(e)
+          }
+        });
       }
-      if (this.state === REJECTED) { 
+      if (this.state === REJECTED) {
         setTimeout(() => {
-          onRejected(this.reason)
-        })
+          try {
+            let x = onRejected(this.reason)
+            resolvePromise(promise2, x, resolve, reject)
+          } catch (e) {
+            reject(e)
+          }
+        });
       }
       if (this.state === PENDING) {
-        this.onFulfilledCallbacks.push(onFulfilled)
-        this.onRejectedCallbacks.push(onRejected)
+        this.onFulfilledCallbacks.push(() => {
+          setTimeout(() => {
+            try {
+              let x = onFulfilled(this.value)
+              resolvePromise(promise2, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          });
+        })
+        this.onRejectedCallbacks.push(() => {
+          setTimeout(() => {
+            try {
+              let x = onRejected(this.reason)
+              resolvePromise(promise2, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          });
+        })
       }
     })
-
     return promise2
-
-   
   }
 }
 
