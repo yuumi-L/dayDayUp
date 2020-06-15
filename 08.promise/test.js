@@ -16,13 +16,19 @@ const Promise = require('./promise')
 //   }
 // )
 
-let p = new Promise((resolve, reject) => {
-  resolve(1000)
-})
-p.then(data => {
-  console.log(data + 1)
-  return data
-}).then(data => {
-  console.log(data + 2)
-})
+// let p = new Promise((resolve, reject) => {
+//   resolve(1000)
+// })
+// p.then(data => {
+//   console.log(data + 1)
+//   return data
+// }).then(data => {
+//   console.log(data + 2)
+// })
 // console.log(3)
+
+new Promise((resolve, reject) => {
+  resolve(1000)
+}).then().then().then(res => {
+  console.log(res)
+})
